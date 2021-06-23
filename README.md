@@ -26,13 +26,17 @@ The following **additional** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='https://i.imgur.com/ARUOR7J.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+
+Walkthrought with more [frames](https://imgur.com/a/HkMx69U)
 
 GIF created with [Kap](https://getkap.co/).
 
 ## Notes
 
 Describe any challenges encountered while building the app.
+
+At the beginning I had some troubles installing android studio and git, but after that everything went alright.
 
 ## License
 
