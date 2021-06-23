@@ -39,12 +39,10 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder>{
     // Responsible for binding data to a particular ViewHolder
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
         // Grab item at position
         String item = items.get(position);
         // bind the item to the specified ViewHolder
         holder.bind(item);
-
     }
 
     @Override

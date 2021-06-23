@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView rvItems;
 
     ItemsAdapter itemsAdapter;
+    ItemsAdapter.OnLongClickListener onLongClickListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,47 +40,57 @@ public class MainActivity extends AppCompatActivity {
         rvItems = findViewById(R.id.rvItems);
 
         loadItems();
+        setUpListeners();
 
-        // Remove item
-        ItemsAdapter.OnLongClickListener onLongClickListener = new ItemsAdapter.OnLongClickListener() {
-            @Override
-            public void onItemLongClicked(int position) {
-                // Delete the item from model at position
-                items.remove(position);
-
-                // notify the adapter
-                itemsAdapter.notifyItemRemoved(position);
-                Toast.makeText(getApplicationContext(), "Item was removed", Toast.LENGTH_SHORT).show();
-
-                saveItems(); // save data
-            }
-        };
-
-        // RecyclerView
+        // RecyclerView setup
         itemsAdapter = new ItemsAdapter(items, onLongClickListener);
         rvItems.setAdapter(itemsAdapter);
         rvItems.setLayoutManager(new LinearLayoutManager(this));
+
+    }
+
+    private void setUpListeners(){
+        // Remove item
+        onLongClickListener = new ItemsAdapter.OnLongClickListener() {
+            @Override
+            public void onItemLongClicked(int position) {
+                removeItem(position);
+            }
+        };
 
         // Add item
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Add new item to the list
-                String todoItem = etItem.getText().toString();
-                items.add(todoItem);
-
-                // notify the adapter
-                itemsAdapter.notifyItemInserted(items.size() - 1);
-
-                etItem.setText(""); // clear edit text
-                Toast.makeText(getApplicationContext(), "Item was added", Toast.LENGTH_SHORT).show();
-
-                saveItems(); // save data
+                addItem();
             }
         });
-
     }
 
+    private void addItem(){
+        // Add new item to the list
+        String todoItem = etItem.getText().toString();
+        items.add(todoItem);
+
+        // notify the adapter
+        itemsAdapter.notifyItemInserted(items.size() - 1);
+
+        etItem.setText(""); // clear edit text
+        Toast.makeText(getApplicationContext(), "Item was added", Toast.LENGTH_SHORT).show();
+
+        saveItems(); // save data
+    }
+
+    private void removeItem(int position){
+        // Delete the item from model at position
+        items.remove(position);
+
+        // notify the adapter
+        itemsAdapter.notifyItemRemoved(position);
+        Toast.makeText(getApplicationContext(), "Item was removed", Toast.LENGTH_SHORT).show();
+
+        saveItems(); // save data
+    }
 
     private File getDataFile(){
         return new File(getFilesDir(),"data.txt");
